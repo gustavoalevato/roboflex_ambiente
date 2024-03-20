@@ -1,0 +1,152 @@
+version: '3'
+services:
+  acesso:
+    build:
+      context: ../workspace/acesso
+      dockerfile: Dockerfile
+    container_name: roboflex-acesso
+    restart: unless-stopped
+    ports:
+      - "8101:8080"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    working_dir: /app
+    networks:
+      - app-network
+
+  catraca:
+    build:
+      context: ../workspace/catraca
+      dockerfile: Dockerfile
+    container_name: roboflex-catraca
+    restart: unless-stopped
+    ports:
+      - "8102:8080"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    working_dir: /app
+    networks:
+      - app-network
+
+  sgi:
+    build:
+      context: ../workspace/SGI20
+      dockerfile: Dockerfile
+    container_name: roboflex-sgi
+    restart: unless-stopped
+    ports:
+      - "8103:8080"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    working_dir: /app
+    networks:
+      - app-network
+
+  indicadores-frontend:
+    build:
+      context: ../workspace/Indicadores-vue
+      dockerfile: Dockerfile
+    container_name: roboflex-indicadores-frontend
+    restart: unless-stopped
+    ports:
+      - "8104:80"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    working_dir: /app
+    networks:
+      - app-network
+
+  monitoramento-frontend:
+    build:
+      context: ../workspace/monitoramento-vue3
+      dockerfile: Dockerfile
+    container_name: roboflex-monitoramento-frontend
+    restart: unless-stopped
+    ports:
+      - "8105:80"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    working_dir: /app
+    networks:
+      - app-network
+  
+  thalamus-acesso-frontend:
+    build:
+      context: ../workspace/thalamus-acesso-vue
+      dockerfile: Dockerfile
+    container_name: thalamus-acesso-frontend
+    restart: unless-stopped
+    ports:
+      - "8106:80"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    working_dir: /app
+    networks:
+      - app-network
+
+#  thalamus-estrutura-frontend:
+#    build:
+#      context: ../workspace/Thalamus-Estrutura
+#      dockerfile: Dockerfile
+#    container_name: thalamus-acesso-frontend
+#    restart: unless-stopped
+#    ports:
+#      - "8107:80"
+#    environment:
+#      SERVICE_NAME: app
+#      SERVICE_TAGS: dev
+#      APP_DEBUG: true
+#    working_dir: /app
+#    networks:
+#      - app-network
+
+  webserver:
+    image: nginx:alpine
+    container_name: roboflex-webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./config/nginx/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8-debian
+    container_name: roboflex-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3386:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123123
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./config/mysql/dbdata:/var/lib/mysql/
+      #- ./config/mysql/conf/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+#Networks
+networks:
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
