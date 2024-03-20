@@ -12,6 +12,8 @@ services:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
       APP_DEBUG: true
+    env_file:
+      - ../workspace/acesso/.env.local
     working_dir: /app
     networks:
       - app-network
@@ -28,6 +30,8 @@ services:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
       APP_DEBUG: true
+    env_file:
+      - ../workspace/catraca/.env.local
     working_dir: /app
     networks:
       - app-network
@@ -44,6 +48,8 @@ services:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
       APP_DEBUG: true
+    env_file:
+      - ../workspace/SGI20/.env.local
     working_dir: /app
     networks:
       - app-network
@@ -141,6 +147,20 @@ services:
       #- ./config/mysql/conf/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network
+
+  phpmyadmin:
+    container_name: roboflex-phpmyadmin
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8110:80
+    networks:
+      - app-network
+    environment:
+      - PMA_ARBITRARY=1
+      - UPLOAD_LIMIT=500M
+    links:
+      - db
 
 #Networks
 networks:
