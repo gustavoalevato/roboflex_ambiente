@@ -1,41 +1,6 @@
 version: '3'
 services:
-  acesso:
-    build:
-      context: ../workspace/acesso
-      dockerfile: Dockerfile
-    container_name: roboflex-acesso
-    restart: unless-stopped
-    ports:
-      - "8101:8080"
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-      APP_DEBUG: true
-    env_file:
-      - ../workspace/acesso/.env.local
-    working_dir: /app
-    networks:
-      - app-network
-
-  catraca:
-    build:
-      context: ../workspace/catraca
-      dockerfile: Dockerfile
-    container_name: roboflex-catraca
-    restart: unless-stopped
-    ports:
-      - "8102:8080"
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-      APP_DEBUG: true
-    env_file:
-      - ../workspace/catraca/.env.local
-    working_dir: /app
-    networks:
-      - app-network
-
+  
   sgi:
     build:
       context: ../workspace/SGI20
@@ -43,14 +8,18 @@ services:
     container_name: roboflex-sgi
     restart: unless-stopped
     ports:
-      - "8103:8080"
+      - "8100:8080"
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
       APP_DEBUG: true
     env_file:
       - ../workspace/SGI20/.env.local
+    volumes:
+      - ../workspace/SGI20:/app
     working_dir: /app
+    links:
+      - db
     networks:
       - app-network
 
@@ -61,7 +30,7 @@ services:
     container_name: roboflex-indicadores-frontend
     restart: unless-stopped
     ports:
-      - "8104:80"
+      - "8101:80"
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
@@ -77,7 +46,7 @@ services:
     container_name: roboflex-monitoramento-frontend
     restart: unless-stopped
     ports:
-      - "8105:80"
+      - "8102:80"
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
@@ -88,9 +57,57 @@ services:
   
   thalamus-acesso-frontend:
     build:
-      context: ../workspace/thalamus-acesso-vue
+      context: ../workspace/thalamus-acesso
       dockerfile: Dockerfile
     container_name: thalamus-acesso-frontend
+    restart: unless-stopped
+    ports:
+      - "8103:80"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    working_dir: /app
+    networks:
+      - app-network
+
+  thalamus-estrutura-frontend:
+    build:
+      context: ../workspace/Thalamus-estrutura-vue3
+      dockerfile: Dockerfile
+    container_name: thalamus-estrutura-frontend
+    restart: unless-stopped
+    ports:
+      - "8104:80"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    working_dir: /app
+    networks:
+      - app-network
+
+  thalamus-jira-frontend:
+    build:
+      context: ../workspace/Thalamus-jira-vue3
+      dockerfile: Dockerfile
+    container_name: thalamus-jira-frontend
+    restart: unless-stopped
+    ports:
+      - "8105:80"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    working_dir: /app
+    networks:
+      - app-network
+
+  thalamus-orcamento-frontend:
+    build:
+      context: ../workspace/Thalamus-orcamento
+      dockerfile: Dockerfile
+    container_name: thalamus-orcamento-frontend
     restart: unless-stopped
     ports:
       - "8106:80"
@@ -101,22 +118,6 @@ services:
     working_dir: /app
     networks:
       - app-network
-
-#  thalamus-estrutura-frontend:
-#    build:
-#      context: ../workspace/Thalamus-Estrutura
-#      dockerfile: Dockerfile
-#    container_name: thalamus-acesso-frontend
-#    restart: unless-stopped
-#    ports:
-#      - "8107:80"
-#    environment:
-#      SERVICE_NAME: app
-#      SERVICE_TAGS: dev
-#      APP_DEBUG: true
-#    working_dir: /app
-#    networks:
-#      - app-network
 
   webserver:
     image: nginx:alpine
