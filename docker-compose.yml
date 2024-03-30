@@ -15,8 +15,6 @@ services:
       APP_DEBUG: true
     env_file:
       - ../workspace/SGI20/.env.local
-    volumes:
-      - ../workspace/SGI20:/app
     working_dir: /app
     links:
       - db
@@ -27,14 +25,14 @@ services:
     build:
       context: ../workspace/Indicadores-vue
       dockerfile: Dockerfile
+      args:
+        AMBIENTE: development
     container_name: roboflex-indicadores-frontend
     restart: unless-stopped
     ports:
       - "8101:80"
     environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-      APP_DEBUG: true
+      NODE_ENV: development
     working_dir: /app
     networks:
       - app-network
@@ -43,14 +41,12 @@ services:
     build:
       context: ../workspace/monitoramento-vue3
       dockerfile: Dockerfile
+      args:
+        AMBIENTE: development
     container_name: roboflex-monitoramento-frontend
     restart: unless-stopped
     ports:
       - "8102:80"
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-      APP_DEBUG: true
     working_dir: /app
     networks:
       - app-network
@@ -59,14 +55,12 @@ services:
     build:
       context: ../workspace/thalamus-acesso
       dockerfile: Dockerfile
+      args:
+        AMBIENTE: development
     container_name: thalamus-acesso-frontend
     restart: unless-stopped
     ports:
       - "8103:80"
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-      APP_DEBUG: true
     working_dir: /app
     networks:
       - app-network
@@ -75,14 +69,12 @@ services:
     build:
       context: ../workspace/Thalamus-estrutura-vue3
       dockerfile: Dockerfile
+      args:
+        AMBIENTE: development
     container_name: thalamus-estrutura-frontend
     restart: unless-stopped
     ports:
       - "8104:80"
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-      APP_DEBUG: true
     working_dir: /app
     networks:
       - app-network
@@ -91,14 +83,12 @@ services:
     build:
       context: ../workspace/Thalamus-jira-vue3
       dockerfile: Dockerfile
+      args:
+        AMBIENTE: development
     container_name: thalamus-jira-frontend
     restart: unless-stopped
     ports:
       - "8105:80"
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-      APP_DEBUG: true
     working_dir: /app
     networks:
       - app-network
@@ -107,14 +97,12 @@ services:
     build:
       context: ../workspace/Thalamus-orcamento
       dockerfile: Dockerfile
+      args:
+        AMBIENTE: development
     container_name: thalamus-orcamento-frontend
     restart: unless-stopped
     ports:
       - "8106:80"
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-      APP_DEBUG: true
     working_dir: /app
     networks:
       - app-network
@@ -125,7 +113,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "8080:80"
+      - "8120:80"
     volumes:
       - ./:/var/www
       - ./config/nginx/:/etc/nginx/conf.d/
