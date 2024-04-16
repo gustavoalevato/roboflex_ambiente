@@ -1,11 +1,33 @@
 version: '3'
 services:
   
-  sgi:
+  thalamus-sso:
     build:
-      context: ../workspace/SGI20
+      context: ../workspace/thalamus-sso
       dockerfile: Dockerfile
-    container_name: roboflex-sgi
+    container_name: thalamus-sso
+    restart: unless-stopped
+    ports:
+      - "8199:80"
+    volumes:
+      - ../workspace/thalamus-sso:/var/www/html/
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_DEBUG: true
+    env_file:
+      - ../workspace/thalamus-sso/.env.local
+    working_dir: /app
+    links:
+      - db
+    networks:
+      - app-network
+
+  thalamus-backend:
+    build:
+      context: ../workspace/thalamus-backend-laravel
+      dockerfile: Dockerfile
+    container_name: thalamus-backend
     restart: unless-stopped
     ports:
       - "8100:8080"
@@ -14,20 +36,20 @@ services:
       SERVICE_TAGS: dev
       APP_DEBUG: true
     env_file:
-      - ../workspace/SGI20/.env.local
+      - ../workspace/thalamus-backend-laravel/.env.local
     working_dir: /app
     links:
       - db
     networks:
       - app-network
 
-  indicadores-frontend:
+  thalamus-indicadores-frontend:
     build:
-      context: ../workspace/Indicadores-vue
+      context: ../workspace/thalamus-indicador-frontend-vue3
       dockerfile: Dockerfile
       args:
         AMBIENTE: development
-    container_name: roboflex-indicadores-frontend
+    container_name: thalamus-indicadores-frontend
     restart: unless-stopped
     ports:
       - "8101:80"
@@ -37,13 +59,13 @@ services:
     networks:
       - app-network
 
-  monitoramento-frontend:
+  thalamus-monitoramento-frontend:
     build:
-      context: ../workspace/monitoramento-vue3
+      context: ../workspace/thalamus-monitoramento-frontend-vue3
       dockerfile: Dockerfile
       args:
         AMBIENTE: development
-    container_name: roboflex-monitoramento-frontend
+    container_name: thalamus-monitoramento-frontend
     restart: unless-stopped
     ports:
       - "8102:80"
@@ -53,7 +75,7 @@ services:
   
   thalamus-acesso-frontend:
     build:
-      context: ../workspace/thalamus-acesso
+      context: ../workspace/thalamus-acesso-frontend-vue3
       dockerfile: Dockerfile
       args:
         AMBIENTE: development
@@ -67,7 +89,7 @@ services:
 
   thalamus-estrutura-frontend:
     build:
-      context: ../workspace/Thalamus-estrutura-vue3
+      context: ../workspace/thalamus-estrutura-frontend-vue3
       dockerfile: Dockerfile
       args:
         AMBIENTE: development
@@ -79,13 +101,13 @@ services:
     networks:
       - app-network
 
-  thalamus-jira-frontend:
+  thalamus-projeto-frontend:
     build:
-      context: ../workspace/Thalamus-jira-vue3
+      context: ../workspace/thalamus-projeto-frontend-vue3
       dockerfile: Dockerfile
       args:
         AMBIENTE: development
-    container_name: thalamus-jira-frontend
+    container_name: thalamus-projeto-frontend
     restart: unless-stopped
     ports:
       - "8105:80"
@@ -95,7 +117,7 @@ services:
 
   thalamus-orcamento-frontend:
     build:
-      context: ../workspace/Thalamus-orcamento
+      context: ../workspace/thalamus-orcamento-frontend-vue3
       dockerfile: Dockerfile
       args:
         AMBIENTE: development

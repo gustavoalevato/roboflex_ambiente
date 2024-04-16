@@ -1,35 +1,49 @@
 ## Ambiente em containers dos sistemas da Roboflex
 
+##### Faça o clone do projeto thalamus-ambiente
+
+```
+git clone https://github.com/gustavoalevato/roboflex_ambiente.git thalamus-ambiente
+```
+
 ##### Baixe os projetos dos repositórios do github dentro da pasta workspace. A estrutura de pasta deverá seguir o seguinte padrão abaixo:
 
-Backend (Todos projetos)
-- https://github.com/devRoboflex/SGI20
-Módulo Acesso (Aplicativo)
-- https://github.com/devRoboflex/thalamus_acesso_app
-Roboflex (Aplicativo)
-- https://github.com/devRoboflex/thalamus_app
-Acesso Catraca
-- https://github.com/nvieira2/thalamus-acesso
-Orçamento
-- https://github.com/mariimozzer/Thalamus-orcamento
-Gestão de Projetos (Jira)
-- https://github.com/mariimozzer/Thalamus-jira-vue3
-Estrutura (Permissões)
-- https://github.com/mariimozzer/Thalamus-estrutura-vue3
-Indicadores
-- https://github.com/devRoboflex/Indicadores-vue
-Monitoramento
-- https://github.com/devRoboflex/monitoramento-vue3
+Thalamus Backend
+- https://github.com/devRoboflex/thalamus-backend-laravel
+
+Thalamus Projeto
+- https://github.com/devRoboflex/thalamus-projeto-frontend-vue3
+
+Thalamus Orçamento
+- https://github.com/devRoboflex/thalamus-orcamento-frontend-vue3
+
+Thalamus Acesso(Catraca)
+- https://github.com/devRoboflex/thalamus-acesso-frontend-vue3
+
+Thalamus Estrutura
+- https://github.com/devRoboflex/thalamus-estrutura-frontend-vue3
+
+Thalamus Monitoramento Dispositivos Móveis
+- https://github.com/devRoboflex/thalamus-monitoramento-frontend-vue3
+
+Thalamus Indicador
+- https://github.com/devRoboflex/thalamus-indicador-frontend-vue3
+
+Thalamus Acesso(Catraca) -App
+- https://github.com/devRoboflex/thalamus-acesso-frontend-flutter
+
+Thalamus App Base
+- https://github.com/devRoboflex/thalamus-app-frontend-flutter
 
 
 ``` 
 .
 ..
-roboflex_ambiente
+thalamus_ambiente
 workspace
 ```
 
-Para iniciar os serviços, acesse o diretório roboflex_ambiente pelo powershell ou terminal linux e execute o seguinte comando abaixo
+Para iniciar os serviços, acesse o diretório thalamus_ambiente pelo powershell ou terminal linux e execute o seguinte comando abaixo
 ```
 docker compose up -d
 
