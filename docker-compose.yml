@@ -30,7 +30,7 @@ services:
     container_name: thalamus-backend
     restart: unless-stopped
     ports:
-      - "8100:8080"
+      - "8110:8080"
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
@@ -131,20 +131,21 @@ services:
 
   webserver:
     image: nginx:alpine
-    container_name: roboflex-webserver
+    container_name: thalamus-webserver
     restart: unless-stopped
     tty: true
     ports:
-      - "8120:80"
+      - "8100:80"
     volumes:
       - ./:/var/www
-      - ./config/nginx/:/etc/nginx/conf.d/
+      #- ./config/nginx/:/etc/nginx/conf.d/
+      - ./config/nginx/sites-enabled:/etc/nginx/conf.d/
     networks:
       - app-network
 
   db:
     image: mysql:8-debian
-    container_name: roboflex-db
+    container_name: thalamus-db
     restart: unless-stopped
     tty: true
     ports:
@@ -164,7 +165,7 @@ services:
     image: phpmyadmin
     restart: always
     ports:
-      - 8110:80
+      - 8111:80
     networks:
       - app-network
     environment:

@@ -48,3 +48,30 @@ Para iniciar os serviços, acesse o diretório thalamus_ambiente pelo powershell
 docker compose up -d
 
 ```
+
+
+Para rodar os projetos resolvendo o nome dos subdominios, adicione esta lista abaixo no arquivo hosts do seu sistema operacional
+
+#### Linux
+```
+sudo nano /etc/hosts
+```
+
+#### Linux
+```
+c:/Windows/System32/drivers/etc/hosts
+```
+
+## Lista de nomes
+
+```
+127.0.0.1       sso.thalamus.com.br
+127.0.0.1       api.thalamus.com.br
+127.0.0.1       indicadores.thalamus.com.br
+127.0.0.1       monitoramento.thalamus.com.br
+127.0.0.1       acesso.thalamus.com.br
+127.0.0.1       estrutura.thalamus.com.br
+127.0.0.1       projeto.thalamus.com.br
+127.0.0.1       orcamento.thalamus.com.br
+127.0.0.1       phpmyadmin.thalamus.com.br
+``` 
