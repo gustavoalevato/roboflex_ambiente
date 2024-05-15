@@ -8,6 +8,12 @@ git clone https://github.com/gustavoalevato/roboflex_ambiente.git thalamus-ambie
 
 ##### Baixe os projetos dos repositórios do github dentro da pasta workspace. A estrutura de pasta deverá seguir o seguinte padrão abaixo:
 
+Thalamus SSO Backend
+- https://github.com/gustavoalevato/thalamus-sso.git
+
+Thalamus Portal Frontend
+- https://github.com/gustavoalevato/thalamus-portal-frontend.git
+
 Thalamus Backend
 - https://github.com/devRoboflex/thalamus-backend-laravel
 
