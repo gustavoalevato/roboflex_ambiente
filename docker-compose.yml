@@ -11,13 +11,16 @@ services:
       - "8199:80"
     volumes:
       - ../workspace/thalamus-sso:/var/www/html/
+      - ./config/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
       APP_DEBUG: true
     env_file:
       - ../workspace/thalamus-sso/.env.local
-    working_dir: /app
+    working_dir: /var/www/html/
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     links:
       - db
     networks:
@@ -30,16 +33,34 @@ services:
     container_name: thalamus-backend
     restart: unless-stopped
     ports:
-      - "8110:8080"
+      - "8110:80"
+    volumes:
+      - ../workspace/thalamus-backend-laravel:/var/www/html/
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
       APP_DEBUG: true
     env_file:
       - ../workspace/thalamus-backend-laravel/.env.local
-    working_dir: /app
+    working_dir: /var/www/html/
     links:
       - db
+    networks:
+      - app-network
+
+  thalamus-portal-frontend:
+    build:
+      context: ../workspace/thalamus-portal-frontend
+      dockerfile: Dockerfile
+      args:
+        AMBIENTE: development
+    container_name: thalamus-portal-frontend
+    restart: unless-stopped
+    ports:
+      - "8107:80"
+    environment:
+      NODE_ENV: staging
+    working_dir: /app
     networks:
       - app-network
 
@@ -129,15 +150,26 @@ services:
     networks:
       - app-network
 
+  thalamus-prototipos:
+    image: nginx:alpine
+    container_name: thalamus-prototipos
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8108:80"
+    volumes:
+      - ../workspace/thalamus-prototipos/:/usr/share/nginx/html/
+    networks:
+      - app-network
+
   webserver:
     image: nginx:alpine
     container_name: thalamus-webserver
     restart: unless-stopped
     tty: true
     ports:
-      - "8100:80"
+      - "80:80"
     volumes:
-      - ./:/var/www
       #- ./config/nginx/:/etc/nginx/conf.d/
       - ./config/nginx/sites-enabled:/etc/nginx/conf.d/
     networks:
@@ -173,6 +205,21 @@ services:
       - UPLOAD_LIMIT=500M
     links:
       - db
+
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: thalamus-jenkins
+    restart: on-failure
+    tty: true
+    ports:
+      - "8112:8080"
+      - "50000:50000"
+    environment:
+      - JAVA_OPTS=-Dhudson.footerURL=https://thalamus.com.br
+    volumes:
+      - ./jenkins/jenkins_home:/var/jenkins_home
+    networks:
+      - app-network
 
 #Networks
 networks:

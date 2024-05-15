@@ -65,13 +65,16 @@ c:/Windows/System32/drivers/etc/hosts
 ## Lista de nomes
 
 ```
-127.0.0.1       sso.thalamus.com.br
-127.0.0.1       api.thalamus.com.br
-127.0.0.1       indicadores.thalamus.com.br
-127.0.0.1       monitoramento.thalamus.com.br
-127.0.0.1       acesso.thalamus.com.br
-127.0.0.1       estrutura.thalamus.com.br
-127.0.0.1       projeto.thalamus.com.br
-127.0.0.1       orcamento.thalamus.com.br
-127.0.0.1       phpmyadmin.thalamus.com.br
+127.0.0.1       sso.thalamus.ind.br
+127.0.0.1       api.thalamus.ind.br
+127.0.0.1       indicadores.thalamus.ind.br
+127.0.0.1       monitoramento.thalamus.ind.br
+127.0.0.1       acesso.thalamus.ind.br
+127.0.0.1       estrutura.thalamus.ind.br
+127.0.0.1       projetos.thalamus.ind.br
+127.0.0.1       orcamento.thalamus.ind.br
+127.0.0.1       phpmyadmin.thalamus.ind.br
+127.0.0.1       jenkins.thalamus.ind.br
+127.0.0.1       portal.thalamus.ind.br
+127.0.0.1       prototipos.thalamus.ind.br
 ``` 
